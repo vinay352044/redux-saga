@@ -3,11 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider} from 'react-redux';
+import { createStore,combineReducers,applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga'
+import myFirstReducer from './reducer';
+import mySaga from './sagas'
+import { composeWithDevTools } from 'redux-devtools-extension';
 
+const sagaMiddleware = createSagaMiddleware()
+
+const  rootReducer = combineReducers({myFirstReducer})
+
+const store  = createStore(rootReducer,composeWithDevTools(applyMiddleware(sagaMiddleware)))
+sagaMiddleware.run(mySaga)   // method to start a redux saga
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>
 );
 
