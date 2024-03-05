@@ -1,17 +1,21 @@
-import {useDispatch,useSelector} from 'react-redux'
-import {getUsersFetch} from './actions.js'
+import React from 'react'
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import Display from './Components/Display'
+import Header from './Components/Header'
 import './App.css';
-
-function App() {
-  const dispatch = useDispatch()
-  const users = useSelector(state => state.myFirstReducer.users)
-  console.log(users)
+import Detailed from './Components/Detailed'
+const App = () => {
   return (
-    <div className="App">
-      <button onClick={()=>dispatch(getUsersFetch())}>Get Users</button>
-     <div>Users: {users.map((user=>(<div>{user.name}</div>)))}</div>
-    </div>
-  );
+    <BrowserRouter>
+    <Header/>
+    <br/>
+    <br/>
+    <Routes>
+      <Route path='/' element={<Display/>}/>
+      <Route path='/detailed/:id' element={<Detailed/>}/>
+    </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
